@@ -1,70 +1,103 @@
-#![allow(dead_code)]
+//tips: just read the compilator error
+fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
+    let mut vec = vec;
 
-mod color_should {
-    use super::*;
+    vec.push(22);
+    vec.push(44);
+    vec.push(66);
 
-    #[test]
-    fn support_equality_comparison() {
-        assert_eq!(Color { red: 32u8, green: 64u8, blue: 128u8 }, Color { red: 32u8, green: 64u8, blue: 128u8 });
-    }
+    vec
+}
 
-    #[test]
-    fn be_a_copy_type() {
-        let original = Color { red: 32u8, green: 64u8, blue: 128u8 };
-        let copy = original;
-        assert_eq!(original, copy);
+#[test]
+fn test_easy_fill_vec() {
+    let vec0 = Vec::new();
+
+    let vec1 = fill_vec(vec0);
+
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+
+    vec1.push(88);
+
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+}
+
+//tips: just read the compilator error
+fn fill_vec_2(vec: Vec<i32>) -> Vec<i32> {
+    vec.push(22);
+    vec.push(44);
+    vec.push(66);
+
+    vec
+}
+
+#[test]
+fn test_easy_fill_vec_2() {
+    let vec0 = Vec::new();
+
+    let mut vec1 = fill_vec_2(vec0);
+
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+
+    vec1.push(88);
+
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+}
+
+#[derive(Debug)]
+struct Foobar(i32);
+
+impl Drop for Foobar {
+    fn drop(&mut self) {
+        // That'll help you to understand ownership
+        println!("Dropping a Foobar: {:?}", self);
     }
 }
 
-struct Car {
-    brand: String,
-    model: String,
+fn uses_foobar(foobar: Foobar) { //TODO: fix my header/signature
+    println!("I consumed a Foobar: {:?}", foobar);
 }
 
-mod car_should {
-    use super::*;
-    
-    #[test]
-    fn have_brand_getter_which_doesnt_consume_self() {
-        let car = Car { brand: String::from("Dacia"), model: String::from("Logan") };
-        assert_eq!(String::from("Dacia"), *car.brand());
-        assert_eq!(String::from("Logan"), *car.model());
-    }
-    
-    #[test]
-    fn have_model_getter_which_doesnt_consume_self() {
-        let car = Car { brand: String::from("Audi"), model: String::from("R8") };
-        assert_eq!(String::from("R8"), *car.model());
-        assert_eq!(String::from("Audi"), *car.brand());
-    }
-    
-    #[test]
-    fn have_brand_setter_which_doesnt_consume_self() {
-        let mut car = Car { brand: String::from("Mercedes"), model: String::from("W176") };
-        car.set_model("A-Class");
-        assert_eq!(String::from("Mercedes"), *car.brand());
-        assert_eq!(String::from("A-Class"), *car.model());
+#[test]
+fn test_fix_consuming_ownership() {
+    let x = Foobar(1);
+    uses_foobar(x);
+    uses_foobar(x);
+}
+
+//DONT TOUCH ME
+fn uses_foobar2(foobar: Foobar) {
+    println!("I consumed a Foobar: {:?}", foobar);
+}
+
+#[test]
+fn test_fix_by_implementing_clone() {
+    //TODO: Add the auto implementation of the trait: Clone on the Foobar structure.
+    //TODO: use the clone() method: https://doc.rust-lang.org/std/clone/trait.Clone.html#required-methods
+    let x = Foobar(1);
+    uses_foobar(x);
+    uses_foobar(x);
+}
+
+impl Foobar {
+    fn use_it(self) { //TODO: fix my header
+        println!("I consumed a Foobar: {:?}", self);
     }
 }
 
-mod car_builder_should {
-    use super::*;
+#[test]
+fn test_fix_trait_ownership() {
+    let x = Foobar(1);
+    x.use_it();
+    x.use_it();
+}
 
-    #[test]
-    fn build_car_with_empty_names_by_default() {
-        let builder = CarBuilder::new();
-        let car = builder.build();
+fn concat(subject: &String) {
+    subject.push_str("You're great!");
+}
 
-        assert_eq!(String::from(""), *car.brand());
-        assert_eq!(String::from(""), *car.model());
-    }
-
-    #[test]
-    fn build_car_using_a_fluent_interface() {
-        let builder = CarBuilder::new();
-        let car = builder.brand("Tesla").model("Model S").build();
-
-        assert_eq!(String::from("Tesla"), *car.brand());
-        assert_eq!(String::from("Model S"), *car.model());
-    }
+#[test]
+fn test_fix_mut_in_concat() {
+    let s = "yolo".to_string();
+    concat(s);
 }

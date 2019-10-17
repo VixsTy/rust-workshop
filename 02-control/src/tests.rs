@@ -1,9 +1,29 @@
 #![allow(dead_code)]
 
-//!
-//! INSTRUCTIONS: Try to use the three loop types for each exercise.
-//! 
+pub fn bigger(a: i32, b: i32) -> i32 {
+    // Complete this function to return the bigger number!
+    // Do not use:
+    // - return
+    // - another function call
+    // - additional variables
+    // Scroll down for hints.
+    unimplemented!()
+}
 
+#[cfg(test)]
+mod basic {
+    use super::*;
+
+    #[test]
+    fn ten_is_bigger_than_eight() {
+        assert_eq!(10, bigger(10, 8));
+    }
+
+    #[test]
+    fn fortytwo_is_bigger_than_thirtytwo() {
+        assert_eq!(42, bigger(32, 42));
+    }
+}
 
 /// Computes product of numbers between `from` and `to` (both included !)
 /// 
@@ -25,11 +45,6 @@ mod product_range_should {
     #[test]
     fn return_120_when_from_4_to_6() {
         assert_eq!(120u32, product_range(4, 6));
-    }
-
-    #[test]
-    fn return_720_when_from_2_to_6() {
-        assert_eq!(720u32, product_range(2, 6));
     }
 
 }

@@ -1,8 +1,8 @@
 [package]
-name = "00_workshop"
+name = "rust_workshop"
 
-version = "0.1.0"
-authors = ["Logan Mzz <loganmzz@users.noreply.github.com>"]
+version = "0.2.0"
+authors = ["Logan Mzz <loganmzz@users.noreply.github.com>", "alessio coltellacci <alessio.coltellacci@clever-cloud.com>"]
 
 [workspace]
 
@@ -20,7 +20,6 @@ members = [
   "11-collections",
   "12-parallelism",
   "13-memory",
-  "99-challenge",
   "solutions",
 ]
 

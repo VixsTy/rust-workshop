@@ -1,6 +1,5 @@
 [package]
 name = "13_memory"
 version = "0.1.0"
-authors = ["Logan Mzz <loganmzz@users.noreply.github.com>"]
-
+authors = ["Logan Mzz <loganmzz@users.noreply.github.com>", "alessio coltellacci <alessio.coltellacci@clever-cloud.com>"]
 [dependencies]
